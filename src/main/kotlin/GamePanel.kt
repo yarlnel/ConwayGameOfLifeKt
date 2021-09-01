@@ -2,6 +2,7 @@ import java.awt.*
 import java.awt.datatransfer.DataFlavor
 import java.awt.event.*
 import java.util.*
+import javax.inject.Inject
 import javax.swing.JButton
 import javax.swing.JPanel
 import javax.swing.JTextArea
@@ -12,7 +13,7 @@ import kotlin.concurrent.scheduleAtFixedRate
 import kotlin.properties.Delegates
 
 
-class GamePanel(sizeOfBlock: Int = 20) : JPanel() {
+class GamePanel (sizeOfBlock: Int = 20) : JPanel() {
     var blockSize: Int = sizeOfBlock
 
 

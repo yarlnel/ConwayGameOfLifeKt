@@ -6,7 +6,9 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 
+lateinit var dagger : AppComponent
 fun main() {
+    dagger = DaggerAppComponent . create()
     GameFrame ()
 
     /*

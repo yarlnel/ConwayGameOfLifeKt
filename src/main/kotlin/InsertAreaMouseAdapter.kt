@@ -1,7 +1,9 @@
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import javax.inject.Inject
 
-class InsertAreaMouseAdapter(val gamePanel: GamePanel) : MouseAdapter() {
+class InsertAreaMouseAdapter
+@Inject constructor(val gamePanel: GamePanel) : MouseAdapter() {
     override fun mousePressed(e: MouseEvent?) {
         e ?. apply {
             val mouseX = x

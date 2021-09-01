@@ -1,7 +1,10 @@
 import java.awt.event.MouseEvent
+import javax.inject.Inject
 import javax.swing.event.MouseInputAdapter
 
-class SelectionAreaMouseAdapter (val gamePanel: GamePanel) : MouseInputAdapter() {
+class SelectionAreaMouseAdapter
+@Inject constructor(val gamePanel: GamePanel) : MouseInputAdapter() {
+
     override fun mousePressed(e: MouseEvent?) {
         e ?. apply {
             gamePanel . selectionAreaModel . apply {

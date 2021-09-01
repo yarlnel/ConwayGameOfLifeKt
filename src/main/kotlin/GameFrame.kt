@@ -2,6 +2,7 @@ import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.FlowLayout
 import java.awt.Toolkit
+import javax.inject.Inject
 import javax.swing.JButton
 import javax.swing.JFrame
 import javax.swing.JPanel
@@ -18,9 +19,9 @@ class GameFrame : JFrame () {
     private val _size by lazy {
         Toolkit.getDefaultToolkit().screenSize
     }
-    private val mainGamePanel = GamePanel()
+    @Inject lateinit var mainGamePanel : GamePanel
 
-    private val selectionAreaMouseListener = SelectionAreaMouseAdapter(mainGamePanel)
+    @Inject lateinit var selectionAreaMouseAdapter: SelectionAreaMouseAdapter
 
     private val evalModeButton = JButton ("Перейти в режим исполнения игры") . apply {
         background = Color.GREEN
@@ -38,7 +39,7 @@ class GameFrame : JFrame () {
         }
     }
 
-    private val insertAreaMouseAdapter = InsertAreaMouseAdapter(mainGamePanel)
+    @Inject lateinit var insertAreaMouseAdapter : InsertAreaMouseAdapter
 
     private val insertsAreaButton = JButton ("Вставить") . apply {
         background = Color.CYAN
@@ -57,8 +58,8 @@ class GameFrame : JFrame () {
         addActionListener {
             mainGamePanel . apply {
                 isSelectionMod = true
-                addMouseListener(selectionAreaMouseListener)
-                addMouseMotionListener(selectionAreaMouseListener)
+                addMouseListener(selectionAreaMouseAdapter)
+                addMouseMotionListener(selectionAreaMouseAdapter)
             }
         }
     }
@@ -75,8 +76,8 @@ class GameFrame : JFrame () {
         when {
             currentMode != GameMode.SELECTION_MODE ->
                 mainGamePanel . apply {
-                    removeMouseListener(selectionAreaMouseListener)
-                    removeMouseMotionListener(selectionAreaMouseListener)
+                    removeMouseListener(selectionAreaMouseAdapter)
+                    removeMouseMotionListener(selectionAreaMouseAdapter)
                     isSelectionMod  = false
                 }
             currentMode != GameMode.EVAL_MODE -> {
@@ -110,6 +111,8 @@ class GameFrame : JFrame () {
     }
 
     init {
+
+       dagger . inject(this)
 
         title = "GameOfLife"
         setSize(_size.width, _size.height)
