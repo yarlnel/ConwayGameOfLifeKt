@@ -1,5 +1,6 @@
 import java.awt.*
 import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.StringSelection
 import java.awt.event.*
 import java.util.*
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import kotlin.concurrent.scheduleAtFixedRate
 import kotlin.properties.Delegates
 
 
-class GamePanel (sizeOfBlock: Int = 20) : JPanel() {
+class GamePanel (sizeOfBlock: Int = 10) : JPanel() {
     var blockSize: Int = sizeOfBlock
 
 
@@ -46,16 +47,19 @@ class GamePanel (sizeOfBlock: Int = 20) : JPanel() {
         repaint()
     }
 
+
+
     fun drawInsertArea (xStart : Int, yStart : Int, gameObject: List<List<Boolean>>) {
         selectionAreaModel . apply {
             setAreaPositions(
                 xStart = xStart,
                 yStart = yStart,
-                xEnd = xStart + gameObject [0] . size * blockSize,
+                xEnd =  xStart + gameObject [0] . size * blockSize,
                 yEnd = yStart + gameObject . size * blockSize
             )
         }
     }
+
 
     fun saveObject () {
         selectionAreaModel . apply {
@@ -63,17 +67,20 @@ class GamePanel (sizeOfBlock: Int = 20) : JPanel() {
                 index > (yStart / blockSize) &&
                         index < (yEnd / blockSize)
             } . map { line ->
-                line . filterIndexed {index, _ ->
+                line . filterIndexed { index, _ ->
                     index > (xStart / blockSize) &&
                             index < (xEnd / blockSize)
                 }
             }.let { blocks ->
-                print("\n\n\n")
+                var text = ""
                 for (line in blocks) {
-                    println()
-                    for (e in line)
-                        print(if (e) "O" else ".")
+                    text += line.joinToString("") { if (it) "O" else "." } + "\n"
                 }
+                Toolkit
+                    .getDefaultToolkit()
+                    .systemClipboard
+                    .setContents(StringSelection(text), null)
+
             }
         }
     }
@@ -112,6 +119,7 @@ class GamePanel (sizeOfBlock: Int = 20) : JPanel() {
             stroke = BasicStroke(1.0f)
         }
     }
+
 
     var canAddNewBlock = true
     private val gamePanelMouseListener = object : MouseInputAdapter() {

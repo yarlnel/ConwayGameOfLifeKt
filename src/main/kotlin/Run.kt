@@ -11,7 +11,7 @@ fun main() {
     dagger = DaggerAppComponent . create()
     GameFrame ()
 
-    /*
+    /*пр
     BlockGrid (16 , 8) . apply {
         listOf(3 to 1, 3 to 2, 3 to 3, 2 to 3, 1 to 2).forEach { pair ->
             changeBlockColor(pair)
