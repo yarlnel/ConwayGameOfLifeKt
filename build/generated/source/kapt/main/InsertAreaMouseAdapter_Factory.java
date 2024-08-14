@@ -1,6 +1,6 @@
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
-import javax.annotation.processing.Generated;
+import javax.annotation.Generated;
 import javax.inject.Provider;
 
 @DaggerGenerated

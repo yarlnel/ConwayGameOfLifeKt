@@ -16,5 +16,5 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGamePanel () : GamePanel
-        = GamePanel(20)
+        = GamePanel()
 }

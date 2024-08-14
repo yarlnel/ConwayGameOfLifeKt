@@ -23,6 +23,8 @@ class GameFrame : JFrame () {
 
     @Inject lateinit var selectionAreaMouseAdapter: SelectionAreaMouseAdapter
 
+    @Inject lateinit var hotKeyListener: HotKeyListener
+
     private val evalModeButton = JButton ("Перейти в режим исполнения игры") . apply {
         background = Color.GREEN
         addActionListener {
@@ -125,6 +127,9 @@ class GameFrame : JFrame () {
             BorderLayout.SOUTH,
             flowPanel
         )
+        isFocusable = true
+
+        addKeyListener(hotKeyListener)
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         isVisible = true
     }

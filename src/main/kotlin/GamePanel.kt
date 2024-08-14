@@ -14,9 +14,9 @@ import kotlin.concurrent.scheduleAtFixedRate
 import kotlin.properties.Delegates
 
 
-class GamePanel (sizeOfBlock: Int = 10) : JPanel() {
-    var blockSize: Int = sizeOfBlock
+class GamePanel () : JPanel() {
 
+    val blockSize: Int = 10
 
     private lateinit var gridSystem: BlockGrid
 
@@ -165,11 +165,11 @@ class GamePanel (sizeOfBlock: Int = 10) : JPanel() {
                try {
                    color =
                        if (blocksGrid.blocks[yPosition][xPosition])
-                           Color.BLACK
+                           Colors.accent
                        else
-                           Color.WHITE
+                           Colors.background
                    fillRect(xPosition * blockSize, yPosition * blockSize, blockSize, blockSize)
-                   color = Color.WHITE
+                   color = Colors.background
                } catch (iex: IndexOutOfBoundsException) {
                    println("fuck: \ny: $yPosition\nx: $xPosition")
                }
@@ -178,11 +178,15 @@ class GamePanel (sizeOfBlock: Int = 10) : JPanel() {
 
     }
 
+
+
     override fun paint(g: Graphics?) {
         super.paint(g)
 
-
         g?.apply {
+
+            color = Colors.background
+            fillRect(0, 0, width, height)
 
             drawBlocks(gridSystem)
 
@@ -193,7 +197,7 @@ class GamePanel (sizeOfBlock: Int = 10) : JPanel() {
                 }
             }
              */
-            color = Color.BLACK
+            color = Colors.setka
             drawGridLines()
 /*
             selectionAreaModel . setAreaPositions(
@@ -208,5 +212,13 @@ class GamePanel (sizeOfBlock: Int = 10) : JPanel() {
                         (this as? Graphics2D) ?. drawSelectionArea()
 
         }
+    }
+}
+
+class Colors {
+    companion object {
+        val accent = Color.RED
+        val setka = Color.BLACK
+        val background = Color.BLACK
     }
 }
